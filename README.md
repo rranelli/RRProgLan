@@ -1,4 +1,0 @@
-RRProgLan
-=========
-
-Courseras ProgLan coursework
