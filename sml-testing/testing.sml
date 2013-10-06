@@ -28,11 +28,11 @@ fun run () =
 	val return = Int.toString(length (!suite)) ^ " tests total"
     in
 	case failed of 
-	    [] => (print("\nTESTS PASSED\n\n"); 
+	    [] => (print("TESTS PASSED\n"); 
 		   return)
 	  | _ => (print("\n");
 		  print_errors(failed);
-		  print("\n" ^ Int.toString(length(failed)) ^" test(s) failed\n\n"); 
+		  print("\n" ^ Int.toString(length(failed)) ^" test(s) failed\n"); 
 		  return)
     end
 	

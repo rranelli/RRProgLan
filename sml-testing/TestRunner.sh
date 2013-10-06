@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+
 file="$1"
 
 bldred=${txtbld}$(tput setaf 1) #  red
-bldgre=${txtbld}$(tput setaf 2) #  green
-txtrst=$(tput sgr0)             # Reset
+bldgre=${txtbld}$(tput setaf 2) #  greenC
+bldyel=${txtbld}$(tput setaf 3) #  yellow
+txtrst=$(tput sgr0)             #  Reset
 
 output=$(sml < "$file")
 
