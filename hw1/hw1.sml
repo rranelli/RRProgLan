@@ -108,6 +108,10 @@ fun number_in_months_challenge ([], _) = 0
   | number_in_months_challenge (dates, months) = 
     number_in_months (dates, unique(months))
 
+fun dates_in_months_challenge (_, []) = []
+  | dates_in_months_challenge (dates, months) =
+    dates_in_months (dates, unique(months))
+
 (*problem 13 - Challenge 2*)
 fun reasonable_date ((year,month,day)) = 
     let
@@ -127,4 +131,3 @@ fun reasonable_date ((year,month,day)) =
         else
             false
     end
-        

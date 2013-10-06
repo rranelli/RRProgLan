@@ -33,7 +33,9 @@ val testUnique = unique([1,2,3,4,5,1,1,1,2,2,3]) = [4,5,1,2,3]
 
 val test12 = number_in_months_challenge([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,3,4,4,3,2]) = 3
 
-val test13 = reasonable_date((0,0,1)) = false andalso
+val test13 = dates_in_months_challenge([(2012,2,28),(2013,12,1),(2011,3,31),(2011,4,28)],[2,3,4,2,3,4]) = [(2012,2,28),(2011,3,31),(2011,4,28)]
+
+val test14 = reasonable_date((0,0,1)) = false andalso
              reasonable_date((4,2,29)) = true andalso
              reasonable_date((2013,2,28)) = true andalso
              reasonable_date((2012,2,29)) = true andalso
