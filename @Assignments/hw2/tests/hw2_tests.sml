@@ -20,53 +20,82 @@ test("test2  is right",
      assert_true(get_substitutions1([["foo"],["there"]], "foo") = [])
     );
 
-test("Example given in the exercise", 
+test("Example given in the exercise",
      assert_true(get_substitutions1(
-                [["Freddie", "Frederick"], ["Bettie", "Beth"], ["Joshua", "Freddie"]], "Freddie") = ["Frederick", "Joshua"])
+                [["Freddie", "Frederick"], ["Fucker"],["Joshua", "Freddie"]], "Freddie") = ["Frederick" , "Joshua"])
     );
-(*
-val test3 = get_substitutions2([["foo"],["there"]], "foo") = []
-test("test3  is right", assert_true(test3))             
 
+test("test2  is right for tail recursive",
+     assert_true(get_substitutions2([["foo"],["there"]], "foo") = [])
+    );
+
+test("Example given in the exercise for tail recursive",
+     assert_true(get_substitutions2(
+                [["Freddie", "Frederick"], ["Fucker"],["Joshua", "Freddie"]], "Freddie") = ["Frederick" , "Joshua"])
+    );
+
+(*
 val test4 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]], {first="Fred", middle="W", last="Smith"}) =
 	    [{first="Fred", last="Smith", middle="W"}, {first="Fredrick", last="Smith", middle="W"},
 	     {first="Freddie", last="Smith", middle="W"}, {first="F", last="Smith", middle="W"}]
-test("test4  is right", assert_true(test4))             
-
-val test5 = card_color((Clubs, Num 2)) = Black
-test("test5  is right", assert_true(test5))             
-
-val test6 = card_value((Clubs, Num 2)) = 2
-test("test6  is right", assert_true(test6))             
-
-val test7 = remove_card([(Hearts, Ace)], (Hearts, Ace), IllegalMove) = []
-test("test7  is right", assert_true(test7))             
-
-val test8 = all_same_color([(Hearts, Ace), (Hearts, Ace)]) = true
-test("test8  is right", assert_true(test8))             
-
-val test9 = sum_cards([(Clubs, Num 2),(Clubs, Num 2)]) = 4
-test("test9  is right", assert_true(test9))             
-
-val test10 = score([(Hearts, Num 2),(Clubs, Num 4)],10) = 4
-test("test10 is right", assert_true(test10))             
-
-val test11 = officiate([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) = 6
-test("test11 is right", assert_true(test11))             
-
-val test12 = officiate([(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades,Ace)],
-                       [Draw,Draw,Draw,Draw,Draw],
-                       42)
-             = 3
-test("test12 is right", assert_true(test12))             
-
-val test13 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
-                         [Draw,Discard(Hearts,Jack)],
-                         42);
-               false) 
-              handle IllegalMove => true)
-test("test13 is right", assert_true(test13))             
+test("test4  is right", assert_true(test4))
 *)
+test("test5  is right",
+     assert_true(card_color((Clubs, (Num 2))) = Black)
+    );
 
-             
+test("test6  is right",
+     assert_true(card_value((Clubs, (Num 2))) = 2)
+    );
+
+test("test7  is right",
+     assert_true(
+         remove_card([(Hearts, Ace)], (Hearts, Ace),
+                             IllegalMove) = []
+     )
+    );
+
+test("test8  is right",
+     assert_true(
+         all_same_color([(Hearts, Ace), (Hearts, Ace)]) = true
+     )
+    );
+
+
+test("test9  is right",
+     assert_true(
+         sum_cards([(Clubs, Num 2),(Clubs, Num 2)]) = 4
+     )
+);
+
+
+test("test10 is right", 
+     assert_true(
+         score([(Hearts, Num 2),(Clubs, Num 4)],10) = 4
+     )
+    );
+
+
+test("test11 is right",
+     assert_true(
+         officiate([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) = 6
+     )
+    );
+
+test("test12 is right",
+     assert_true(
+         officiate([(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades,Ace)],
+                   [Draw,Draw,Draw,Draw,Draw], 42)= 3
+     )
+    );
+
+test("test13 is right",
+     assert_true(
+         (
+           (officiate([(Clubs,Jack),(Spades,Num(8))],
+                      [Draw,Discard(Hearts,Jack)], 42); false)
+           handle IllegalMove => true)
+     )
+);
+
 run();
