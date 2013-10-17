@@ -4,20 +4,34 @@ open SmlTests;
 
 use "../hw2.sml";
 
+test("works when the list is nil", 
+     assert_true(
+         all_except_option("josafh", []) = NONE
+     )
+    );
+
 test("give some of nil if there " ,
-     assert_true(all_except_option("string", ["string"]) = SOME [])
+     assert_true(
+         all_except_option("string", ["string"]) = SOME []
+     )
     );
 
 test("give some of the list with the element removed",
-     assert_true(all_except_option("val", ["val", "otherval"]) = SOME ["otherval"])
+     assert_true(
+         all_except_option("val", ["val", "otherval"]) = SOME ["otherval"]
+     )
     );
 
 test("give some of the list with the element removed 2",
-     assert_true(all_except_option("val", ["fucked val", "val", "otherval"]) = SOME ["fucked val", "otherval"])
+     assert_true(
+         all_except_option("val", ["fucked val", "val", "otherval"]) = SOME ["fucked val", "otherval"]
+     )
     );
 
 test("test2  is right",
-     assert_true(get_substitutions1([["foo"],["there"]], "foo") = [])
+     assert_true(
+         get_substitutions1([["foo"],["there"]], "foo") = []
+     )
     );
 
 test("Example given in the exercise",
@@ -34,12 +48,14 @@ test("Example given in the exercise for tail recursive",
                 [["Freddie", "Frederick"], ["Fucker"],["Joshua", "Freddie"]], "Freddie") = ["Frederick" , "Joshua"])
     );
 
-(*
-val test4 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]], {first="Fred", middle="W", last="Smith"}) =
-	    [{first="Fred", last="Smith", middle="W"}, {first="Fredrick", last="Smith", middle="W"},
-	     {first="Freddie", last="Smith", middle="W"}, {first="F", last="Smith", middle="W"}]
-test("test4  is right", assert_true(test4))
-*)
+test("test4  is right",
+     assert_true(
+         similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]], {first="Fred", middle="W", last="Smith"}) =
+         [{first="Fred", last="Smith", middle="W"}, {first="Fredrick", last="Smith", middle="W"},
+          {first="Freddie", last="Smith", middle="W"}, {first="F", last="Smith", middle="W"}]
+     )
+    );
+
 test("test5  is right",
      assert_true(card_color((Clubs, (Num 2))) = Black)
     );
@@ -52,6 +68,13 @@ test("test7  is right",
      assert_true(
          remove_card([(Hearts, Ace)], (Hearts, Ace),
                              IllegalMove) = []
+     )
+    );
+
+test("remove the given card only ONCE", 
+     assert_true(
+         remove_card([(Hearts, Ace), (Hearts, Ace)], (Hearts, Ace),
+                     IllegalMove) = [(Hearts, Ace)]
      )
     );
 
@@ -97,5 +120,12 @@ test("test13 is right",
            handle IllegalMove => true)
      )
 );
+
+test("must end game if the score is higher than the goal",
+     assert_true(
+         officiate([(Hearts, Jack), (Spades, Num(10)), (Spades, Ace)],
+                  [Draw, Draw, Draw, Draw], 11) = 27
+     )
+    );
 
 run();

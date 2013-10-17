@@ -12,10 +12,11 @@ fun same_string(s1 : string, s2 : string) =
 fun all_except (_, []) = []
   | all_except (s1, head :: tail) =
     if head = s1
-    then all_except (s1, tail)
+    then tail
     else head :: all_except (s1, tail)
 
-fun all_except_option (s1, stringList) =
+fun all_except_option (_, []) = NONE
+  | all_except_option (s1, stringList) =
     let
         val newList = all_except (s1, stringList);
     in
@@ -47,7 +48,17 @@ fun get_substitutions2 ([], _) = []
     end
 
 (*problem 1.d*)
-(* TODO : DO IT !*)
+fun similar_names (namesList, fullName) = 
+    let
+        val {first=x, middle=y, last=z} = fullName
+        val substitutionList = get_substitutions2 (namesList, x)
+
+        fun mapToFullNames ([]) = []
+          | mapToFullNames (sub :: subs') = 
+            {first=sub, middle=y, last=z} :: mapToFullNames (subs')
+    in
+        fullName :: mapToFullNames (substitutionList)
+    end
 
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
@@ -118,11 +129,17 @@ fun score (cards, goal) =
 (*problem 2.g*)
 fun officiate (cards, moves, goal) =
     let
-        fun playGame (heldCards, [], _) = score (heldCards, goal)
-          | playGame (heldCards, _, []) = score (heldCards, goal)
-
-          | playGame (heldCards, nextCard :: remCards, Draw :: remMoves) =
-            playGame (nextCard :: heldCards, remCards, remMoves)
+        fun playGame (heldCards, _, []) = score (heldCards, goal)
+          | playGame (heldCards, [], Draw :: remMoves) = score (heldCards, goal)
+                                                
+          | playGame (heldCards, nextCard :: remCards,
+                      Draw :: remMoves) =
+            let val newHand = nextCard :: heldCards
+            in
+                if sum_cards (newHand) > goal 
+                then score (newHand, goal)
+                else playGame (newHand, remCards, remMoves)
+            end
 
           | playGame (heldCards, cards, (Discard aCard) :: remMoves) =
             let val newHand = remove_card (heldCards, aCard,
@@ -133,7 +150,7 @@ fun officiate (cards, moves, goal) =
     in
         playGame ([], cards, moves)
     end
-
+        
 (*problem 3.a*)
 fun score_challenge (cards, goal) =
     let
@@ -178,4 +195,22 @@ fun officiate_challenge (cards, moves, goal) =
     end
 
 (*problem 3.b*)
-
+(*fun careful_player (cards, goal) = 
+    let
+        fun getNextMove (myCard :: myCards', nextCard :: remCards) = 
+            let
+                val currentScore = score (myCard :: myCards', goal)
+            in
+                if currentScore = goal 
+                then NONE 
+                else
+                    if goal - currentScore > 10 
+                    then SOME Draw
+                    else 
+                        if score (nextCard :: myHand) = goal
+                        then SOME Draw
+                        else Discard myCard
+            end
+    in
+        
+*)
