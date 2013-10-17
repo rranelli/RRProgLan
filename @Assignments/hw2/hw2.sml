@@ -101,7 +101,7 @@ fun foldLeft (aFunction, aList, initVal) =
 
 fun sum_cards (cards) =
     foldLeft (fn (acc,x) => acc + card_value(x), cards, 0)
-
+             
 (*problem 2.f*)
 fun score (cards, goal) =
     let
@@ -137,10 +137,11 @@ fun officiate (cards, moves, goal) =
 (*problem 3.a*)
 fun score_challenge (cards, goal) =
     let
-        val normalScore = score (cards)
+        val normalScore = score (cards, goal)
                                 
         fun new_card_value (_, Ace) = 1
           | new_card_value (aSuit, aRank) = card_value (aSuit, aRank)
+  
         val newRawScore =
             foldLeft (fn (acc, x) => acc + new_card_value (x),
                       cards, 0)
@@ -148,7 +149,7 @@ fun score_challenge (cards, goal) =
         val newPrelimScore = if newRawScore > goal
                              then 3 * (newRawScore - goal)
                              else (goal - newRawScore)
-
+                                      
         val newScore = if all_same_color (cards)
                        then newPrelimScore div 2
                        else newPrelimScore
@@ -158,7 +159,7 @@ fun score_challenge (cards, goal) =
         else newScore
     end
 
-fun officiate_challenge (cards, moves, goal)
+fun officiate_challenge (cards, moves, goal) = 
     let
         fun playGame (heldCards, [], _) = score_challenge (heldCards, goal)
           | playGame (heldCards, _, []) = score_challenge (heldCards, goal)
@@ -177,3 +178,4 @@ fun officiate_challenge (cards, moves, goal)
     end
 
 (*problem 3.b*)
+
