@@ -34,11 +34,18 @@ test("longst 2 should select the second string in case of tie",
      )
     );
 
-(*
-val test4a= longest_string3 ["A","bc","C"] = "bc"
+test("longs3 should work just like longs1",
+     assert_equals_string (
+         longest_string3 ["A","bc","C"] , "bc"
+     )
+);
 
-val test4b= longest_string4 ["A","B","C"] = "C"
-*)
+test("longs4 should work just like longs4",
+     assert_equals_string (
+         longest_string4 ["A","B","C"] , "C"
+     )
+);
+
 test("longest capitalized should get the longest capitalized",
      assert_equals_string (
          longest_capitalized ["Abcx","bc","Cdfd_iamlongest"] , "Cdfd_iamlongest"
@@ -166,21 +173,45 @@ test ("match should not match a constructor binding when they differ",
       )
      );
 
-test ("match should not match a unit pattern", 
+test ("match should only match unit pattern with unit value", 
       assert_true (
+          match (Unit, UnitP) = SOME [] andalso
+          match (Unit, ConstP(1)) = NONE andalso
           match (Const(1), UnitP) = NONE
       )
      );
 
-test ("match should not match a unit value", 
-     assert_true (
-         match (Unit, Variable("x")) = NONE
-     )
+test ("match should give an empty list of bindings if" ^
+      "there is no var in pattern", 
+      assert_true (
+          match (Constructor("myCons", Const(1)),
+                 ConstructorP("myCons", Wildcard)) = SOME []
+      )
      );
 
-(*
-val test12 = first_match Unit [UnitP] = SOME []
+test ("match should match a complex and nested tuple value",
+      assert_true (
+          match (
+              Tuple ([Const(1), Const(2), 
+                      Tuple (
+                          [Const(12), Constructor("k", Const(14))]
+                     )]
+                    ),
+              TupleP ([Variable("x"), Variable("y"), 
+                       TupleP (
+                           [Variable("z"), ConstructorP("k", Variable("w"))]
+                      )]
+                     )
+          )
+          = SOME [("x", Const(1)),("y", Const(2)),
+                  ("z", Const(12)),("w", Const(14))]
+      )
+     );
 
-*)
+test ("unit should be first matched into some empty binding list", 
+      assert_true (
+          (first_match Unit [UnitP]) = SOME []
+      )
+     );
 
 run ();
