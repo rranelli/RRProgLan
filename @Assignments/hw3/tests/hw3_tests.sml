@@ -34,23 +34,29 @@ test("longst 2 should select the second string in case of tie",
      )
     );
 
-test("longs3 should work just like longs1",
+test ("longs3 should work just like longs1",
      assert_equals_string (
          longest_string3 ["A","bc","C"] , "bc"
      )
-);
+     );
 
-test("longs4 should work just like longs4",
+test ("longs4 should work just like longs4",
      assert_equals_string (
          longest_string4 ["A","B","C"] , "C"
      )
-);
+     );
 
-test("longest capitalized should get the longest capitalized",
+test ("all capitals should not return", 
+     assert_equals_string_list (
+         only_capitals ["A", "b", "Cd", "e"],  ["A", "Cd"]
+     )
+     );
+
+test ("longest capitalized should get the longest capitalized",
      assert_equals_string (
          longest_capitalized ["Abcx","bc","Cdfd_iamlongest"] , "Cdfd_iamlongest"
      )
-    );
+     );
 
 test("longest capitalized should resolve ties with the first occurence",
      assert_equals_string (
@@ -89,6 +95,14 @@ test("all_answers should return answers when there are",
                      ) [0, 33, 2, 1, 77] = SOME [33, 34, 77, 78]
      )
     );
+
+test("all_answers should return some of nil when called on nil ",
+     assert_true (
+         all_answers (fn x => if x > 2 then SOME [x, x+1] else NONE
+                     ) [] = SOME []
+     )
+    );
+
 
 test ("should count a single wildcard right", 
      assert_equals_int (
