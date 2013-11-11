@@ -5,7 +5,7 @@
 
 ;; Be sure to put your homework file in the same folder as this test file.
 ;; Uncomment the line below and change HOMEWORK_FILE to the name of your homework file.
-;;(require "HOMEWORK_FILE")
+(require "hw4.rkt")
 (require rackunit)
 
 ;; Helper functions
@@ -43,15 +43,15 @@
    (check-equal? (stream-for-n-steps (cycle-lists (list 1 2 3) (list "a" "b")) 3) (list (cons 1 "a") (cons 2 "b") (cons 3 "a")) 
                  "cycle-lists test")
    
-   ; vector-assoc test
+;   ; vector-assoc test
    (check-equal? (vector-assoc 4 (vector (cons 2 1) (cons 3 1) (cons 4 1) (cons 5 1))) (cons 4 1) "vector-assoc test")
    
-   ; cached-assoc tests
+;   ; cached-assoc tests
    (check-equal? ((cached-assoc (list (cons 1 2) (cons 3 4)) 3) 3) (cons 3 4) "cached-assoc test")
-   
-   ; while-less test
+;   
+;   ; while-less test
    (check-equal? (while-less 7 do (begin (set! a (+ a 1)) a)) #t "while-less test")
-   
+;   
    ))
 
 (require rackunit/text-ui)
